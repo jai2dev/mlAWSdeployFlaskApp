@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Eligible Application</title>
+</head>
+<body>
+
+    <h1>Loan Eligible Application</h1>
+    <form method="post" action="/predict">
+        <label>Property_Area</label><br>
+        <input type="text" name="Property_Area"><br><br>
+        <label>Education</label><br>
+        <input type="text" name="Education"><br><br>
+        <label>Dependents</label><br>
+        <input type="text" name="Dependents"><br><br>
+        <label>Credit_History</label><br>
+        <input type="text" name="Credit_History"><br><br>
+        <label>ApplicantIncome</label><br>
+        <input type="text" name="ApplicantIncome"><br><br>
+        <label>LoanAmount</label><br>
+        <input type="text" name="LoanAmount"><br><br>
+
+        <label>Loan_Amount_Term</label><br>
+        <input type="text" name="Loan_Amount_Term"><br><br>
+
+        <input type="submit" value="Predict"><br><br>
+    </form>
+
+</body>
+</html>
