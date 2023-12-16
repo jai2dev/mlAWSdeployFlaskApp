@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request
 import pickle
 import numpy as np
+from sklearn.preprocessing import LabelEncoder
 
 model = pickle.load(open('model.pkl','rb'))
 app = Flask(__name__)
@@ -12,17 +13,25 @@ def index():
 @app.route('/predict',methods=['POST'])
 def predict_loan():
     'Property_Area','Education', 'Dependents','Credit_History','ApplicantIncome','LoanAmount','Loan_Amount_Term'
-    property_Area = float(request.form.get('Property_Area'))
-    education = int(request.form.get('Education'))
-    dependents = int(request.form.get('Dependents'))
+    property_Area = request.form.get('Property_Area')
+    education = request.form.get('Education')
+    dependents = request.form.get('Dependents')
     credit_History = float(request.form.get('Credit_History'))
     applicantIncome = int(request.form.get('ApplicantIncome'))
-    loanAmount = int(request.form.get('LoanAmount'))
-    loan_Amount_Term = int(request.form.get('Loan_Amount_Term'))
-
+    loanAmount = float(request.form.get('LoanAmount'))
+    loan_Amount_Term = float(request.form.get('Loan_Amount_Term'))
+    inputData=np.array([property_Area,education, dependents,credit_History,applicantIncome,loanAmount,loan_Amount_Term])
+    categorical_data = inputData[:3]
+    numerical_data = inputData[3:]
+    label_encoder = LabelEncoder()
+    encoded_categorical_data = label_encoder.fit_transform(categorical_data)
     # prediction
-    result = model.predict(np.array([property_Area,education, dependents,credit_History,applicantIncome,loanAmount,loan_Amount_Term]).reshape(1,7))
-
+    encoded_categorical_data=np.array(encoded_categorical_data,dtype=object)
+    final_input_data = np.concatenate((encoded_categorical_data, numerical_data))
+    print(final_input_data)
+    final_input_data=final_input_data.reshape(1,-1)
+    result = model.predict(final_input_data)
+    print(result)
     if result[0] == 1:
         result = 'You are Eligible'
     else:
@@ -32,4 +41,4 @@ def predict_loan():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=8080)
+    app.run(host='0.0.0.0',port=8090,debug=True)
