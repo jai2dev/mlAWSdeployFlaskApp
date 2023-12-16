@@ -28,10 +28,8 @@ def predict_loan():
     # prediction
     encoded_categorical_data=np.array(encoded_categorical_data,dtype=object)
     final_input_data = np.concatenate((encoded_categorical_data, numerical_data))
-    print(final_input_data)
     final_input_data=final_input_data.reshape(1,-1)
     result = model.predict(final_input_data)
-    print(result)
     if result[0] == 1:
         result = 'You are Eligible'
     else:
@@ -41,4 +39,4 @@ def predict_loan():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=8090,debug=True)
+    app.run(host='0.0.0.0',port=8090)
