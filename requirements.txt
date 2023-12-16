@@ -1,3 +1,4 @@
 flask
 numpy
-sklearn
+scikit-learn
+xgboost==1.7.1
