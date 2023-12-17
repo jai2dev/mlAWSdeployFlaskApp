@@ -12,7 +12,6 @@ def index():
 
 @app.route('/predict',methods=['POST'])
 def predict_loan():
-    'Property_Area','Education', 'Dependents','Credit_History','ApplicantIncome','LoanAmount','Loan_Amount_Term'
     property_Area = request.form.get('Property_Area')
     education = request.form.get('Education')
     dependents = request.form.get('Dependents')
